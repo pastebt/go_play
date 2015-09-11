@@ -60,16 +60,20 @@ func clt2(to time.Duration) {
     // visit first
     resp, err := clt.Get("http://127.0.0.1:8080/bar")
     println(err)
-    buf, err := ioutil.ReadAll(resp.Body)
+    b := make([]byte, 2, 2)
+    n, err := resp.Body.Read(b)
+    //buf, err := ioutil.ReadAll(resp.Body)
     println(err)
-    println(buf)
-    println(string(buf))
-    resp.Body.Close()
+    println(n)
+    println(string(b))
+    //println(buf)
+    //println(string(buf))
+    //resp.Body.Close()
 
     // visit again
     resp, err = clt.Get("http://127.0.0.1:8080/bar")
     println(err)
-    buf, err = ioutil.ReadAll(resp.Body)
+    buf, err := ioutil.ReadAll(resp.Body)
     println(err)
     println(buf)
     println(string(buf))
@@ -77,6 +81,15 @@ func clt2(to time.Duration) {
 
     // Done
     conn.Close()
+    /*
+    resp, err = clt.Get("http://127.0.0.1:8080/bar")
+    println(err)
+    buf, err = ioutil.ReadAll(resp.Body)
+    println(err)
+    println(buf)
+    println(string(buf))
+    resp.Body.Close()
+    */
 }
 
 
