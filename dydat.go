@@ -5,6 +5,8 @@ import (
     "sync/atomic"
 )
 
+//https://godoc.org/golang.org/x/exp/inotify
+
 
 var dat atomic.Value
 var dch chan byte = make(chan byte, 1)
