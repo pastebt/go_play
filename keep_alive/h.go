@@ -11,9 +11,12 @@ import (
 )
 
 
+var cnt int = 0
+
 func svr() {
     http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello, %v\n", r.RemoteAddr)
+        fmt.Fprintf(w, "%d, Hello, %v\n", cnt, r.RemoteAddr)
+        cnt = cnt + 1
         println(r.RemoteAddr)
     })
     println(http.ListenAndServe(":8080", nil))
