@@ -93,10 +93,33 @@ func clt2(to time.Duration) {
 }
 
 
+func clt3() {
+    //t := &http.Transport{Proxy: http.ProxyFromEnvironment,
+    //                     TLSHandshakeTimeout: 10 * time.Second,
+    //                    }
+    //clt := http.Client{Transport: t}
+    clt := http.Client{}
+    resp, err := clt.Get("http://127.0.0.1:8080/bar")
+    println(err.Error())
+    if err != nil { return }
+    buf, err := ioutil.ReadAll(resp.Body)
+    println(err)
+    println(buf)
+    println(string(buf))
+    resp, err = clt.Get("http://127.0.0.1:8080/bar")
+    println(err)
+    buf, err = ioutil.ReadAll(resp.Body)
+    println(err)
+    println(buf)
+    println(string(buf))
+}
+
+
 func main() {
     if len(os.Args) < 2 {
         svr()
     } else {
-        clt2(time.Duration(10) * time.Second)
+        //clt2(time.Duration(10) * time.Second)
+        clt3()
     }
 }
