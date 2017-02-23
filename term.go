@@ -1,3 +1,5 @@
+package main
+
 // IsTerminal returns true if the given file descriptor is a terminal.
 // https://godoc.org/golang.org/x/crypto/ssh/terminal#IsTerminal
 // https://github.com/golang/crypto/blob/master/ssh/terminal/util.go#L31
