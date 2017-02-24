@@ -30,6 +30,10 @@ func wk(w http.ResponseWriter, r *http.Request) {
 }
 
 
+func test() string {
+    return "test string"
+}
+
 func svr2() {
     s := http.Server{Addr: ":8080", Handler: http.HandlerFunc(wk)}
     s.ListenAndServe()
