@@ -24,4 +24,10 @@ func main() {
     var a A
     e = json.Unmarshal(m, &a)
     fmt.Printf("a=%v, e=%v, S=%v\n", a, e, a.S)
+
+    a.S = "str2"
+    n, e := json.Marshal(a)
+    fmt.Printf("n=%v, e=%v\n", string(n), e)
+    e = json.Unmarshal(n, &b)
+    fmt.Printf("b=%v, e=%v, S=%v, I=%v\n", b, e, b.S, b.I)
 }
