@@ -33,11 +33,11 @@ type tStmt struct {
 }
 func (s *tStmt)Close() error { return nil }
 func (s *tStmt)NumInput() int { return s.num }
-func (s *tStmt)Exec(args []driver.Value) (*tResult, error) {
+func (s *tStmt)Exec(args []driver.Value) (driver.Result, error) {
     t := tResult{liid: 10, rwaf: 1}
     return &t, nil
 }
-func (s *tStmt)Query(args []driver.Value) (*tRows, error) {
+func (s *tStmt)Query(args []driver.Value) (driver.Rows, error) {
     return &tRows{}, nil
 }
 
@@ -50,12 +50,12 @@ func (t *tTx)Rollback() error { return nil }
 
 type tstConn struct {
 }
-func (c *tstConn)Prepare(query string) (*tStmt, error) {
+func (c *tstConn)Prepare(query string) (driver.Stmt, error) {
     t := tStmt{}
     return &t, nil
 }
 func (c *tstConn)Close() error { return nil }
-func (c *tstConn)Begin() (*tTx, error) {
+func (c *tstConn)Begin() (driver.Tx, error) {
     t := tTx{}
     return &t, nil
 }
@@ -63,12 +63,13 @@ func (c *tstConn)Begin() (*tTx, error) {
 
 type tstDrv struct {
 }
-func (t *tstDrv)Open(name string) (*tstConn, error) {
+func (t *tstDrv)Open(name string) (driver.Conn, error) {
     tc := tstConn{}
     return &tc, nil
 }
 
 /*********************test Driver***************************/
+
 
 
 
@@ -80,6 +81,8 @@ type Dat struct {
 
 
 func main() {
+    sql.Register("tstdrv", &tstDrv{})
+
     d := &Dat{uid: 100, ukey: "key"}
     v := reflect.ValueOf(d)
     t := reflect.TypeOf(*d)
