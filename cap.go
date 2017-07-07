@@ -3,6 +3,7 @@ package main
 import (
     //"os"
     "fmt"
+    "time"
     "net/url"
     "net/http"
     "io/ioutil"
@@ -35,9 +36,10 @@ func (rc *RC)Verify(req http.Request) bool {
 
 
 func (rc *RC)VerifyString(dat string) bool {
-    resp, err := http.PostForm(RcURL,
-                               url.Values{"secret": {rc.Key},
-                                          "response": {dat}})
+    client := &http.Client{Timeout: 20 * time.Second}
+    resp, err := client.PostForm(RcURL,
+                                 url.Values{"secret": {rc.Key},
+                                            "response": {dat}})
     if err != nil { rc.Err = err; return false }
     defer resp.Body.Close()
 
