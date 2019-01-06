@@ -52,9 +52,14 @@ func main() {
 	// Hello world, the web server
 
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
+        //w.Header().Set("Content-Type", "text/html; charset=utf-8")
+        w.Header().Set("Link", `<https://justpaste.it/u8j7>; rel="original", <http://web.archive.org/web/timemap/link/https://justpaste.it/u8j7>; rel="timemap"; type="application/link-format", <http://web.archive.org/web/https://justpaste.it/u8j7>; rel="timegate", <http://web.archive.org/web/20160513214322/https://justpaste.it/u8j7>; rel="first memento"; datetime="Fri, 13 May 2016 21:43:22 GMT", <http://web.archive.org/web/20160513214322/https://justpaste.it/u8j7>; rel="memento"; datetime="Fri, 13 May 2016 21:43:22 GMT", <http://web.archive.org/web/20160513214322/https://justpaste.it/u8j7>; rel="last memento"; datetime="Fri, 13 May 2016 21:43:22 GMT"`)
+        w.Header().Set("X-Cache-Key", `httpweb.archive.org/web/20160513214322/http:/justpaste.it/u8j7//CA`)
+        w.Header().Set("X-Archive-Orig-vary", "Accept-Encoding")
+        w.Header().Set("X-location", "All")
 		io.WriteString(w, req.RequestURI + "\n")
 	}
 
 	http.HandleFunc("/", helloHandler)
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
